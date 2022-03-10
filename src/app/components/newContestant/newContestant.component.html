@@ -1,0 +1,38 @@
+<h1 mat-dialog-title *ngIf="!edit">Add new contestant</h1>
+<h1 mat-dialog-title *ngIf="edit">Edit {{name}} {{last_name}} data</h1>
+<div mat-dialog-content class='new_contestant_form'>
+  <p>Enter new contestant personal data:</p>
+  <mat-form-field appearance="outline" class='new_contestant_form'>
+    <mat-label>Name:</mat-label>
+    <input matInput [(ngModel)]="name">
+  </mat-form-field>
+  <mat-form-field appearance="outline" class='new_contestant_form'>
+    <mat-label>Last name:</mat-label>
+    <input matInput [(ngModel)]="last_name">
+  </mat-form-field>
+  <mat-form-field appearance="outline" class='new_contestant_form'>
+    <mat-label>Birth Date :</mat-label>
+    <input matInput [(ngModel)]="birth_date">
+  </mat-form-field>
+  <mat-form-field appearance="outline" class='new_contestant_form'>
+    <mat-label>Phone:</mat-label>
+    <input matInput [(ngModel)]="phone">
+  </mat-form-field>
+  <mat-form-field appearance="outline" class='new_contestant_form'>
+    <mat-label>Country:</mat-label>
+    <input matInput [(ngModel)]="country">
+  </mat-form-field>
+  <mat-form-field appearance="outline" class='new_contestant_form'>
+    <mat-label>Email:</mat-label>
+    <input matInput [(ngModel)]="email">
+  </mat-form-field>
+  <mat-form-field appearance="outline" class='new_contestant_form'>
+    <mat-label>Character:</mat-label>
+    <input matInput [(ngModel)]="character">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="addContestant()" cdkFocusInitial *ngIf="!edit">Save</button>
+  <button mat-button (click)="editContestant()" cdkFocusInitial *ngIf="edit">Edit</button>
+</div>

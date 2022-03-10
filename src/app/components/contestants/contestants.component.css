@@ -1,0 +1,25 @@
+/* MAIN CARD STYLES */
+
+.example-card {
+  max-width: 70%;
+}
+
+.example-header-image {
+  background-image: url('https://i.pinimg.com/564x/49/17/50/4917506d3c4b402e9d60e25197f49e75.jpg');
+  background-size: cover;
+}
+
+.main-card {
+    display: flex;
+    justify-content: center;
+}
+
+/* TABLE STYLES */
+
+table {
+    width: 100%;
+}
+
+th.mat-sort-header-sorted {
+    color: black;
+}

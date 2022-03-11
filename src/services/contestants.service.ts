@@ -12,37 +12,19 @@ export class ContestantsService {
     ) { }
 
     public getAll(): Promise < any > {
-
-        // let params: HttpParams = new HttpParams();
-
-        // params = params.append('token', this.getToken());
-
         return this.http.get(`${environment.starWarsApiURl}/contestants/`).toPromise();
     }
 
-    // public insert(casouso: CasosUso): Observable<any> {
+    public insert(contestant: Contestant): Promise<any> {
+      return this.http.post(`${environment.starWarsApiURl}/contestants`, { contestant }).toPromise();
+    }
 
-    //     return this.http.post(`${environment.reportsUrl}/api/casos-uso`, { casouso: casouso, token: this.getToken() }).map(res => res);
-    // }
+    public update(contestant: Contestant, id: string): Promise<any> {
+      return this.http.put(`${environment.starWarsApiURl}/contestants/${id}`, { contestant }).toPromise();
+    }
 
-    // public update(casousoEdited: CasosUso): Observable<any> {
-    //     return this.http.put(`${environment.reportsUrl}/api/casos-uso`, { casouso: casousoEdited, token: this.getToken() }).map(res => res);
-    // }
-    // public delete(id: number): Observable<any> {
-    //     let params: HttpParams = new HttpParams();
-    //     params = params.append('token', this.getToken());
-
-    //     return this.http.delete(`${environment.reportsUrl}/api/casos-uso/${id}`, { params: params }).map(res => res);
-    // }
-
-    // public uploadFile(casouso: CasosUsoExp[]): Observable<any> {
-
-    //     return this.http.post(`${environment.reportsUrl}/api/casos-uso/file`, { casouso: casouso, token: this.getToken() }).map(res => res);
-    // }
-
-
-    // getToken() {
-    //     return window.sessionStorage.getItem('token');
-    // }
+    public delete(id: string): Promise<any> {
+        return this.http.delete(`${environment.starWarsApiURl}/contestants/${id}`).toPromise();
+    }
 }
 

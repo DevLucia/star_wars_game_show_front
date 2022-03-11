@@ -4,31 +4,46 @@
   <p>Enter new contestant personal data:</p>
   <mat-form-field appearance="outline" class='new_contestant_form'>
     <mat-label>Name:</mat-label>
-    <input matInput [(ngModel)]="name">
+    <input matInput [(ngModel)]="name" required>
   </mat-form-field>
   <mat-form-field appearance="outline" class='new_contestant_form'>
     <mat-label>Last name:</mat-label>
-    <input matInput [(ngModel)]="last_name">
+    <input matInput [(ngModel)]="last_name" required>
   </mat-form-field>
   <mat-form-field appearance="outline" class='new_contestant_form'>
     <mat-label>Birth Date :</mat-label>
-    <input matInput [(ngModel)]="birth_date">
+    <input matInput [formControl]="birth_date" required placeholder="YYYY-MM-DD">
+    <mat-error *ngIf="birth_date.invalid">{{getBirthDateErrorMessage()}}</mat-error>
   </mat-form-field>
   <mat-form-field appearance="outline" class='new_contestant_form'>
     <mat-label>Phone:</mat-label>
-    <input matInput [(ngModel)]="phone">
+    <input matInput [formControl]="phone" required placeholder="+34 000 00 00 00">
+    <mat-error *ngIf="phone.invalid">{{getPhoneErrorMessage()}}</mat-error>
   </mat-form-field>
   <mat-form-field appearance="outline" class='new_contestant_form'>
     <mat-label>Country:</mat-label>
-    <input matInput [(ngModel)]="country">
+    <input matInput [formControl]="country">
+    <mat-error *ngIf="country.invalid">{{getCountryErrorMessage()}}</mat-error>
   </mat-form-field>
   <mat-form-field appearance="outline" class='new_contestant_form'>
     <mat-label>Email:</mat-label>
-    <input matInput [(ngModel)]="email">
+    <input matInput [formControl]="email">
+    <mat-error *ngIf="email.invalid">{{getMailErrorMessage()}}</mat-error>
   </mat-form-field>
   <mat-form-field appearance="outline" class='new_contestant_form'>
-    <mat-label>Character:</mat-label>
-    <input matInput [(ngModel)]="character">
+    <mat-label>Character</mat-label>
+    <input type="text"
+           placeholder="Star Wars character"
+           aria-label="character"
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto"
+           [(ngModel)]="character">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>

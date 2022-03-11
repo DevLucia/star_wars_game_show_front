@@ -10,6 +10,10 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { MatDialog } from '@angular/material/dialog';
 import { NewContestantDialog } from '../newContestant/newContestant.component';
+import { ConfirmationDialog } from '../confirmationDialog/confirmation.component';
+import { AlertSnackBar } from '../alert_snackbar/alert.snackbar.component';
+
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-contestants',
@@ -24,7 +28,8 @@ export class ContestantsComponent implements OnInit {
   constructor(
     private contestantService: ContestantsService,
     private characterService: CharactersService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) { }
 
   public contestants: Contestant [] = [];
@@ -33,6 +38,14 @@ export class ContestantsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'last_name', 'birth_date', 'phone', 'country', 'email', 'character', 'actions'];
 
   dataSource!: MatTableDataSource<Contestant>;
+
+  durationInseconds: number = 5;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+
+  ngAfterViewInit():void {
+    
+  }
 
   ngOnInit(): void {
     this.getContestants();
@@ -48,6 +61,8 @@ export class ContestantsComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.contestants);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      console.log('paginator', this.dataSource.paginator);
+      console.log('sort', this.dataSource.sort);
     })
   }
 
@@ -93,7 +108,20 @@ export class ContestantsComponent implements OnInit {
   
       dialogRef.afterClosed().subscribe((result: Contestant) => {
         console.log('The dialog was closed', result);
-        const newContestant = result;
+        if (result){
+          const newContestant = result;
+          this.contestantService.insert(newContestant)
+          .then(res => {
+            this.getContestants();
+            return this._snackBar.openFromComponent(AlertSnackBar, {
+              duration: this.durationInseconds * 1000,
+              horizontalPosition: this.horizontalPosition,
+              verticalPosition: this.verticalPosition,
+              data: 'Contestant Created!'
+            });
+          })
+          .catch(err => console.log(err));
+        }
       });
   }
 
@@ -104,14 +132,47 @@ export class ContestantsComponent implements OnInit {
       data: {characters: this.characters, contestant: contestant, edit: true, id: contestant.id},
     });
 
-    dialogRef.afterClosed().subscribe((result: Contestant) => {
+    dialogRef.afterClosed().subscribe((result: any) => {
       console.log('The dialog was closed', result);
-      const editedContestant = result;
+      if (result){
+        const editedContestant = result.contestant;
+        const id = result.id;
+        this.contestantService.update(editedContestant, id)
+        .then(res => {
+          this.getContestants();
+          return this._snackBar.openFromComponent(AlertSnackBar, {
+            duration: this.durationInseconds * 1000,
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            data: 'Contestant Edited!'
+          })
+        })
+      }
     });
   }
 
-  deleteContestant = (contestant: Contestant) => {
+  deleteContestant = (contestant: any) => {
     console.log('delete event', contestant);
+    const dialogRef = this.dialog.open(ConfirmationDialog, {
+      width: '400px',
+      data: {contestant: contestant, id: contestant.id, delete: true},
+    });
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      console.log('The dialog was closed', result);
+      const deleteId = result;
+      this.contestantService.delete(deleteId)
+      .then(res => {
+        this.getContestants();
+        return this._snackBar.openFromComponent(AlertSnackBar, {
+          duration: this.durationInseconds * 1000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          data: 'Contestant Deleted!'
+        })
+      })
+      .catch(err => console.log(err))
+    });
   }
 
 }

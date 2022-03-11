@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {FormControl, Validators} from '@angular/forms';
 
 import { map, startWith } from 'rxjs/operators';
-import { Observable } from 'rxjs-compat/observable';
+import { Observable } from 'rxjs';
 
 import { Contestant } from '../../../models/contestant';
 
@@ -75,13 +75,11 @@ export interface DialogData {
     }
 
     getBirthDateErrorMessage() {
-      console.log('birth date', this.birth_date)
       if (this.birth_date.hasError('required')) {
         return 'You must enter a valid birth date, yyyy-mm-dd';
       }
       const birthday = +new Date(this.birth_date.value)
       const age = ~~((Date.now() - birthday) / (31557600000))
-      console.log('AGE', age)
       if (age < 18){
         return 'The age of the contestant must be over 18 years.'
       }

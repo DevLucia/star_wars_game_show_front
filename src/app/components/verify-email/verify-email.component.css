@@ -1,0 +1,19 @@
+.singIn_form {
+    width: 350px;
+  }
+  
+  .example-card {
+    max-width: 70%;
+    margin-top: 100px;
+  }
+  
+  .main-card {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .signForm {
+    display: flex;
+    flex-direction: column;
+  }
+  

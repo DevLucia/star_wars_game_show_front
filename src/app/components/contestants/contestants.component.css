@@ -23,3 +23,8 @@ table {
 th.mat-sort-header-sorted {
     color: black;
 }
+
+.tools{
+    display: flex;
+    justify-content: space-between;
+}

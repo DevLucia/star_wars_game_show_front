@@ -13,5 +13,15 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Code Structure
 
-The project has a main component Contestant with the table of all contestants and several dialog components to manage the Contestant list.
+The project has a main component Contestant with the table of all contestants and several dialog components to manage the Contestant list (add, edit and delete contetants).
+
+## Functionalities
+
+The table is sortable and is paginated to better access its data.
+Also you can find a filter to filter in any table field.
+The characters are taken from SWAPI API, and the contestants appear sorted by last name when first open the page.
+
+## Authentication performed with Firebase
+
+The project needs authentication by mail or by Google account, one verified the mail, the user can access the main page in which the contestants can be managed.
 

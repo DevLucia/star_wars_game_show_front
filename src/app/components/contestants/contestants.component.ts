@@ -3,6 +3,7 @@ import { Contestant } from '../../../models/contestant';
 
 import { ContestantsService } from '../../../services/contestants.service';
 import { CharactersService } from '../../../services/characters.service';
+import { AuthService } from '../../../services/auth-services/auth.service';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -12,8 +13,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { NewContestantDialog } from '../newContestant/newContestant.component';
 import { ConfirmationDialog } from '../confirmationDialog/confirmation.component';
 import { AlertSnackBar } from '../alert_snackbar/alert.snackbar.component';
-
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-contestants',
@@ -29,7 +30,8 @@ export class ContestantsComponent implements OnInit {
     private contestantService: ContestantsService,
     private characterService: CharactersService,
     public dialog: MatDialog,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    public authService: AuthService
   ) { }
 
   public contestants: Contestant [] = [];
@@ -42,10 +44,6 @@ export class ContestantsComponent implements OnInit {
   durationInseconds: number = 5;
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-
-  ngAfterViewInit():void {
-    
-  }
 
   ngOnInit(): void {
     this.getContestants();
@@ -61,8 +59,6 @@ export class ContestantsComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.contestants);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      console.log('paginator', this.dataSource.paginator);
-      console.log('sort', this.dataSource.sort);
     })
   }
 
@@ -70,7 +66,7 @@ export class ContestantsComponent implements OnInit {
     this.characterService.getAll(1)
     .then(result => {
       console.log('Characters', result);
-      // Saco el número de paginas para cargar todos los caracteres
+
       const pages = result.count / 10 + 1;
       this.characters = [...this.characters, ...result.results];
 

@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  starWarsApiURl: 'http://localhost:3001', 
+  starWarsApiURl: 'http://localhost:3000', 
   swapiURL: 'https://swapi.dev/api',
   firebaseConfig : {
     apiKey: "AIzaSyBnHaEWpPPZ4YyqmiNj6cImgu5wWXfC6XQ",
